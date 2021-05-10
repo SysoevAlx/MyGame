@@ -12,10 +12,22 @@
         android:scaleType="fitXY"
         android:src="@drawable/background" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/furore"
+        android:gravity="center"
+        android:text="STAR CRUSHER"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:textSize="70dp" />
+
     <ImageView
         android:id="@+id/playb"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/playbutton"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/playbutton" />
 </RelativeLayout>
