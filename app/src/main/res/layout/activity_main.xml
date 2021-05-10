@@ -18,7 +18,7 @@
         android:fontFamily="@font/furore"
         android:gravity="center"
         android:text="STAR CRUSHER"
-        android:textColor="@color/white"
+        android:textColor="#F0F1FE"
         android:layout_marginTop="30dp"
         android:textSize="70dp" />
 

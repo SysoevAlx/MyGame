@@ -2,6 +2,7 @@ package com.example.mygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,6 +13,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hideNavBar();
+        findViewById(R.id.playb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+startActivity(new Intent(MainActivity.this, GameplayActivity.class));
+                overridePendingTransition(0,0);
+                hideNavBar();
+            }
+        });
     }
 
     // Скрыть системную навигацию при разворачивании приложения
