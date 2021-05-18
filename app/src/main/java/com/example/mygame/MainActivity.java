@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.playb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-startActivity(new Intent(MainActivity.this, GameplayActivity.class));
-                overridePendingTransition(0,0);
+                startActivity(new Intent(MainActivity.this, GameplayActivity.class));
+                overridePendingTransition(0, 0);
                 hideNavBar();
             }
         });
