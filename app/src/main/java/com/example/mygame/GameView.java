@@ -129,7 +129,7 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
                 if (event.getX() < screenX / 2) {
                     player.direction = -1;
                 } else player.direction = 1;
