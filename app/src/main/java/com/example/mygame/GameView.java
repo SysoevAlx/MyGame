@@ -13,7 +13,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private Thread thread;
     private boolean isPlaying;
-    private int screenX, screenY, cooldown;
+    private int screenX, screenY, cooldown, formercoordinate;
     public static float screenRatioX, screenRatioY;
     private Paint paint;
     private GameBackground background1, background2;
@@ -64,6 +64,8 @@ public class GameView extends SurfaceView implements Runnable {
         if (player.direction != 0) {
             player.x += player.direction * screenRatioX * 10;
         }
+        if (player.x + player.widht / 2==formercoordinate) player.direction = 0;
+
         if (player.x <= 0) player.x = 0;
         if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
 
@@ -128,11 +130,14 @@ public class GameView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        formercoordinate = (int) event.getX();
         switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                if (event.getX() < screenX / 2) {
+                if (event.getX() < player.x + player.widht / 2) {
                     player.direction = -1;
-                } else player.direction = 1;
+                }
+                else player.direction = 1;
                 break;
             case MotionEvent.ACTION_UP:
                 player.direction = 0;
@@ -143,7 +148,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void ShootBullet() {
         Bullet bullet = new Bullet(getResources());
-        bullet.x = player.x+player.widht/2;
+        bullet.x = player.x + player.widht / 2;
         bullet.y = player.y;
         bullets.add(bullet);
     }
