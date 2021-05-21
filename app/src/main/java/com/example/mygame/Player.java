@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import static com.example.mygame.GameView.screenRatioY;
-import static com.example.mygame.GameView.screenRationX;
+import static com.example.mygame.GameView.screenRatioX;
 
 public class Player {
     int x, y, widht, height, direction;
@@ -19,7 +19,7 @@ public class Player {
         widht /= 64;
         height /= 32;
 
-        widht *= (int) (widht*screenRationX);
+        widht *= (int) (widht* screenRatioX);
         height *= (int) (height*screenRatioY);
 
         player = Bitmap.createScaledBitmap(player, widht, height, false);
