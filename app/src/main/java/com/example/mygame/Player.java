@@ -3,6 +3,7 @@ package com.example.mygame;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import static com.example.mygame.GameView.screenRatioY;
 import static com.example.mygame.GameView.screenRatioX;
@@ -26,6 +27,10 @@ public class Player {
 
         x = screenX / 2 - player.getWidth()/2; // посередине
         y = (int) (screenY - (120 * screenRatioY)) - player.getHeight();
+    }
+
+    Rect HitBox() {
+        return new Rect(x, y, x + widht, y + height);
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.mygame;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import static com.example.mygame.GameView.screenRatioY;
 import static com.example.mygame.GameView.screenRatioX;
@@ -25,5 +26,9 @@ public class Bullet {
         height *= (int) (height*screenRatioY);
 
         bullet = Bitmap.createScaledBitmap(bullet, widht, height, false);
+    }
+
+    Rect HitBox() {
+        return new Rect(x, y, x + widht, y + height);
     }
 }
