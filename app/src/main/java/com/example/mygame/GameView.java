@@ -76,11 +76,19 @@ public class GameView extends SurfaceView implements Runnable {
         if (background2.y + background2.background.getHeight() < 0) {
             background2.y = screenY;
         }
-        if (player.direction != 0) {
-            player.x += player.direction * screenRatioX * 10;
+        if (player.directionx != 0) {
+            player.x += player.directionx * screenRatioX * 10;
         }
+        if (player.directiony != 0) {
+            player.y += player.directiony * screenRatioX * 10;
+        }
+
         if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
-            player.direction = 0;
+            player.directionx = 0;
+
+        if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
+            player.directiony = 0;
+
 
         if (player.x <= 0) player.x = 0;
         if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
@@ -198,15 +206,23 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         formercoordinate[0] = (int) event.getX();
+        formercoordinate[1] = (int) event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
                 if (event.getX() < player.x + player.widht / 2 - 10) {
-                    player.direction = -1;
-                } else if (event.getX() > player.x + player.widht / 2 + 10) player.direction = 1;
+                    player.directionx = -1;
+                }
+                else if (event.getX() > player.x + player.widht / 2 + 10) {
+                    player.directionx = 1;
+                }
+
+                if (event.getY()<player.y+player.height/2 + 10) player.directiony= -1;
+                else if (event.getY()>player.y+player.height/2-10) player.directiony = 1;
                 break;
             case MotionEvent.ACTION_UP:
-                player.direction = 0;
+                player.directionx = 0;
+                player.directiony = 0;
                 break;
         }
         return true;

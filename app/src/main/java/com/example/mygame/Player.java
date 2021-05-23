@@ -9,7 +9,7 @@ import static com.example.mygame.GameView.screenRatioY;
 import static com.example.mygame.GameView.screenRatioX;
 
 public class Player {
-    int x, y, widht, height, direction;
+    int x, y, widht, height, directionx, directiony;
     Bitmap player;
 
     Player(int screenX, int screenY, Resources res) { // добавил параметр по y для лучшего позицонирования
