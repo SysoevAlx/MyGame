@@ -150,8 +150,8 @@ public class GameView extends SurfaceView implements Runnable {
 
         for (Bullet bullet : trashBullet) {
             bullets.remove(bullet);
-            trashBullet.remove(bullet);
         }
+        trashBullet.clear();
     }
 
     private void draw() {
