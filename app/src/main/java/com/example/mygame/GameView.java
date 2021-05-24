@@ -23,8 +23,9 @@ public class GameView extends SurfaceView implements Runnable {
     private GameBackground background1, background2;
     private Player player;
     private Boss boss;
-    private List<Enemy> enemies;
+    private Enemy[] enemies;
     private List<Bullet> bullets;
+    private List<Bullet> ebullets;
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
@@ -42,11 +43,12 @@ public class GameView extends SurfaceView implements Runnable {
         boss = new Boss(screenX, screenY, getResources());
 
         bullets = new ArrayList<>();
-        enemies = new ArrayList<>();
+        ebullets = new ArrayList<>();
+        enemies = new Enemy[4];
         for (int i = 0; i < 4; i++) {
             Enemy enemy = new Enemy(getResources());
             enemy.y = -100;
-            enemies.add(enemy);
+            enemies[i] = enemy;
         }
 
 
@@ -76,6 +78,7 @@ public class GameView extends SurfaceView implements Runnable {
         if (background2.y + background2.background.getHeight() < 0) {
             background2.y = screenY;
         }
+
         if (player.directionx != 0) {
             player.x += player.directionx * screenRatioX * 10;
         }
@@ -134,6 +137,14 @@ public class GameView extends SurfaceView implements Runnable {
 
             enemy.y += enemy.speed;
 
+            if (random.nextInt(50)<10 && cooldown%20 == 1){ // стрельба врагов
+                Bullet enb = new Bullet(getResources());
+                enb.x = enemy.x+enemy.widht/2;
+                enb.y = enemy.y+enemy.height;
+                ebullets.add(enb);
+            }
+
+
             for (Bullet bullet : bullets) {
                 if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
                     enemy.y -= 500;
@@ -148,8 +159,22 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }
 
+        for (Bullet bullet: ebullets){ // логика вражкеских пуль
+
+            bullet.y += 20 * screenRatioY;
+            if (bullet.y > screenY) {
+                trashBullet.add(bullet);
+            }
+            if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
+                isGameOver = true;
+                return;
+            }
+        }
+
+
         for (Bullet bullet : trashBullet) {
             bullets.remove(bullet);
+            ebullets.remove(bullet);
         }
         trashBullet.clear();
     }
@@ -165,6 +190,10 @@ public class GameView extends SurfaceView implements Runnable {
 
 
             for (Bullet bullet : bullets) {
+                canvas.drawBitmap(bullet.bullet, bullet.x, bullet.y, paint);
+            }
+
+            for (Bullet bullet : ebullets) {
                 canvas.drawBitmap(bullet.bullet, bullet.x, bullet.y, paint);
             }
 
