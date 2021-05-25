@@ -20,7 +20,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int soundhit, soundexplosion, soundbutton, music;
     private Thread thread;
     private boolean isPlaying, isGameOver;
-    private int screenX, screenY, cooldown, killcount;
+    private int screenX, screenY, cooldown, killcount, difficulty;
     private int[] formercoordinate = new int[2];
     public static float screenRatioX, screenRatioY;
     private Random random;
@@ -42,6 +42,7 @@ public class GameView extends SurfaceView implements Runnable {
         screenRatioY = 1080f / screenY;
         cooldown = 0;
         killcount = 0;
+        difficulty = 5;
 
         background1 = new GameBackground(screenX, screenY, getResources());
         background2 = new GameBackground(screenX, screenY, getResources());
@@ -66,8 +67,6 @@ public class GameView extends SurfaceView implements Runnable {
         soundhit = soundPool.load(activity, R.raw.shoot, 1);
         soundexplosion = soundPool.load(activity, R.raw.explode, 2);
         soundbutton = soundPool.load(activity, R.raw.buttons, 3);
-        music = soundPool.load(activity, R.raw.backmusic, 4);
-
 
 
         bullets = new ArrayList<>();
@@ -130,9 +129,20 @@ public class GameView extends SurfaceView implements Runnable {
             ShootBullet();
         }
 
-        if (killcount == 5 && boss.y<-500)
+        if (killcount >= 5 && boss.y<300)
         {
-            boss.y = 300;
+            boss.y += 25;
+        }
+
+        if (boss.y>300){
+            for(int i = 0; i<difficulty; i++){
+            if (random.nextInt(50)<15 && cooldown%20 == 1){ // стрельба босса
+                Bullet enb = new Bullet(getResources(),2);
+                enb.x = random.nextInt(boss.widht)+boss.x;
+                enb.y = boss.y+boss.height;
+                ebullets.add(enb);
+            }
+            }
         }
 
         List<Bullet> trashBullet = new ArrayList<>();
@@ -146,13 +156,15 @@ public class GameView extends SurfaceView implements Runnable {
                 bullet.y = -screenY;
                 if (boss.health==0) { // логика босса
                     boss.y -= screenY;
-                    boss.health = 20;
                     cooldown=0;
+                    killcount = 0;
+                    difficulty++;
+                    boss.health = 10;
                     soundPool.play(soundexplosion,1,1,1, 3,1.5f);
                 }
                 boss.health -=1;
             }
-            bullet.y -= 20 * screenRatioY;
+            bullet.y -= 40 * screenRatioY;
         }
 
         for (Enemy enemy : enemies) { // логика противников
@@ -161,14 +173,14 @@ public class GameView extends SurfaceView implements Runnable {
             }
 
             if (enemy.y + enemy.height < 0) {
-                enemy.speed = random.nextInt((int) (30 * screenRatioY)) + 5;
+                enemy.speed = random.nextInt((int) (20 * screenRatioY)) + 5;
                 enemy.x = random.nextInt(screenX - enemy.widht);
             }
 
             enemy.y += enemy.speed;
 
             if (random.nextInt(50)<10 && cooldown%20 == 1){ // стрельба врагов
-                Bullet enb = new Bullet(getResources());
+                Bullet enb = new Bullet(getResources(),2);
                 enb.x = enemy.x+enemy.widht/2;
                 enb.y = enemy.y+enemy.height;
                 ebullets.add(enb);
@@ -177,7 +189,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             for (Bullet bullet : bullets) {
                 if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
-                    enemy.y -= 500;
+                    enemy.y = -200;
                     bullet.y -=screenY;
                     killcount++;
                     soundPool.play(soundexplosion,1,1,1, 0,1);
@@ -193,7 +205,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         for (Bullet bullet: ebullets){ // логика вражкеских пуль
 
-            bullet.y += 20 * screenRatioY;
+            bullet.y += 40 * screenRatioY;
             if (bullet.y > screenY) {
                 trashBullet.add(bullet);
             }
@@ -293,9 +305,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void ShootBullet() {
         soundPool.play(soundhit, 0.5f,0.5f,0,0,1);
-        Bullet bullet = new Bullet(getResources());
+        Bullet bullet = new Bullet(getResources(), 1);
         bullet.x = player.x + player.widht / 2;
-        bullet.y = player.y;
+        bullet.y = player.y-bullet.height/2;
         bullets.add(bullet);
     }
 }

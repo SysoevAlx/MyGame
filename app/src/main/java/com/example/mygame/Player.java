@@ -30,7 +30,7 @@ public class Player {
     }
 
     Rect HitBox() {
-        return new Rect(x, y, x + widht, y + height);
+        return new Rect(x+30, y+25, x + widht-30, y + height-25);
     }
 
 }

@@ -13,15 +13,22 @@ public class Bullet {
     int x, y, widht, height;
     Bitmap bullet;
 
-    Bullet(Resources res) {
+    Bullet(Resources res, int type) {
+        if (type == 1)
         bullet = BitmapFactory.decodeResource(res, R.drawable.bullet);
+        else bullet = BitmapFactory.decodeResource(res, R.drawable.ebullet);
 
         widht = bullet.getWidth();
         height = bullet.getHeight();
 
-        widht /= 24;
-        height /= 24;
-
+        if (type == 1) {
+            widht /= 24;
+            height /= 24;
+        }
+        else {
+            widht /= 24;
+            height /= 10;
+        }
         widht *= (int) (widht* screenRatioX);
         height *= (int) (height*screenRatioY);
 

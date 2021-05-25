@@ -13,7 +13,7 @@ public class Enemy {
     Bitmap enemy;
 
     Enemy(Resources res) {
-        enemy = BitmapFactory.decodeResource(res, R.drawable.player);
+        enemy = BitmapFactory.decodeResource(res, R.drawable.enemy);
 
         widht = enemy.getWidth();
         height = enemy.getHeight();
