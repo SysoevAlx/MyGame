@@ -4,6 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -13,6 +17,7 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
 
+    private int soundhit, soundexplosion, soundbutton, music;
     private Thread thread;
     private boolean isPlaying, isGameOver;
     private int screenX, screenY, cooldown, killcount;
@@ -26,9 +31,11 @@ public class GameView extends SurfaceView implements Runnable {
     private Enemy[] enemies;
     private List<Bullet> bullets;
     private List<Bullet> ebullets;
+    private SoundPool soundPool;
 
-    public GameView(Context context, int screenX, int screenY) {
-        super(context);
+    public GameView(GameplayActivity activity, int screenX, int screenY) {
+        super(activity);
+
         this.screenX = screenX;
         this.screenY = screenY;
         screenRatioX = 1920f / screenX;
@@ -41,6 +48,27 @@ public class GameView extends SurfaceView implements Runnable {
 
         player = new Player(screenX, screenY, getResources());
         boss = new Boss(screenX, screenY, getResources());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // работаем с музыкой
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+
+        } else
+            soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
+
+        soundhit = soundPool.load(activity, R.raw.shoot, 1);
+        soundexplosion = soundPool.load(activity, R.raw.explode, 2);
+        soundbutton = soundPool.load(activity, R.raw.buttons, 3);
+        music = soundPool.load(activity, R.raw.backmusic, 4);
+
+
 
         bullets = new ArrayList<>();
         ebullets = new ArrayList<>();
@@ -56,15 +84,16 @@ public class GameView extends SurfaceView implements Runnable {
 
         paint = new Paint();
         random = new Random();
+
     }
 
     @Override
     public void run() {
+        soundPool.play(music,1,1,4,-1,1);
         while (isPlaying) {
             update();
             draw();
             sleep();
-
         }
     }
 
@@ -119,6 +148,7 @@ public class GameView extends SurfaceView implements Runnable {
                     boss.y -= screenY;
                     boss.health = 20;
                     cooldown=0;
+                    soundPool.play(soundexplosion,1,1,1, 3,1.5f);
                 }
                 boss.health -=1;
             }
@@ -150,10 +180,12 @@ public class GameView extends SurfaceView implements Runnable {
                     enemy.y -= 500;
                     bullet.y -=screenY;
                     killcount++;
+                    soundPool.play(soundexplosion,1,1,1, 0,1);
                 }
             }
 
             if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
+                soundPool.play(soundexplosion,1,1,1, 0,1);
                 isGameOver = true;
                 return;
             }
@@ -166,6 +198,7 @@ public class GameView extends SurfaceView implements Runnable {
                 trashBullet.add(bullet);
             }
             if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
+                soundPool.play(soundexplosion,1,1,1, 0,1);
                 isGameOver = true;
                 return;
             }
@@ -180,6 +213,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void draw() {
+
         if (getHolder().getSurface().isValid()) {
             Canvas canvas = getHolder().lockCanvas();
             canvas.drawBitmap(background1.background, background1.x, background1.y, paint);
@@ -258,6 +292,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void ShootBullet() {
+        soundPool.play(soundhit, 0.5f,0.5f,0,0,1);
         Bullet bullet = new Bullet(getResources());
         bullet.x = player.x + player.widht / 2;
         bullet.y = player.y;
