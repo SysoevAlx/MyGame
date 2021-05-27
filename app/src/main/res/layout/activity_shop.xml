@@ -4,23 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background" />
+    android:background="#1A1424"
+    tools:context=".ShopActivity">
 
     <TextView
-        android:id="@+id/highScoreTxt"
-        android:layout_width="373dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/furore"
-        android:gravity="end"
-        android:text="High score"
+        android:gravity="center"
+        android:text="SHOP"
         android:textColor="#F0F1FE"
-        android:textSize="20dp" />
+        android:layout_marginTop="60dp"
+        android:textSize="70dp" />
 
     <TextView
         android:id="@+id/moneyTxt"
@@ -33,25 +28,6 @@
         android:layout_marginLeft="30dp"
         android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/furore"
-        android:gravity="center"
-        android:text="STAR CRUSHER"
-        android:textColor="#F0F1FE"
-        android:layout_marginTop="30dp"
-        android:textSize="70dp" />
-
-    <ImageView
-        android:id="@+id/playb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:src="@drawable/playbutton" />
-
     <ImageView
         android:id="@+id/settingsb"
         android:layout_width="69dp"
@@ -61,6 +37,15 @@
         android:src="@drawable/settings" />
 
     <ImageView
+        android:id="@+id/homeb"
+        android:layout_width="69dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/home" />
+
+    <ImageView
         android:id="@+id/shopb"
         android:layout_width="69dp"
         android:layout_height="53dp"
@@ -68,13 +53,5 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="270dp"
         android:src="@drawable/shop" />
-
-    <ImageView
-        android:layout_width="69dp"
-        android:layout_height="53dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/home" />
 
 </RelativeLayout>

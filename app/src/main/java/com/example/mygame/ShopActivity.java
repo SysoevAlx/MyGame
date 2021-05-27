@@ -6,48 +6,40 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.security.cert.PKIXRevocationChecker;
+
+public class ShopActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shop);
         hideNavBar();
 
         SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
 
-        TextView highScoreTxt = findViewById(R.id.highScoreTxt);
-        highScoreTxt.setText ("HighScore: " + prefs.getInt("highscore", 0));
-
         TextView moneyTxt = findViewById(R.id.moneyTxt);
         moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
 
-        findViewById(R.id.playb).setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.homeb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, GameplayActivity.class));
+                startActivity(new Intent(ShopActivity.this, MainActivity.class));
                 overridePendingTransition(0, 0);
             }
         });
+
         findViewById(R.id.settingsb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, OptionActivity.class));
+                startActivity(new Intent(ShopActivity.this, OptionActivity.class));
                 overridePendingTransition(0, 0);
             }
         });
-
-        findViewById(R.id.shopb).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ShopActivity.class));
-                overridePendingTransition(0, 0);
-            }
-        });
-
     }
 
     // Скрыть системную навигацию при разворачивании приложения
@@ -56,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         hideNavBar();
     }
-
-
 
     // Скрыть системную навигацию
     private void hideNavBar() {
@@ -75,4 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
     }
+
+
 }

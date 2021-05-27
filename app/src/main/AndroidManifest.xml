@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyGame">
         <activity
+            android:name=".ShopActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyGame.noActionBar" />
+        <activity
             android:name=".GameplayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MyGame.noActionBar" />

@@ -1,12 +1,15 @@
 package com.example.mygame;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class OptionActivity extends AppCompatActivity {
 
@@ -19,7 +22,10 @@ public class OptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_option);
         hideNavBar();
 
+
         SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
+        TextView moneyTxt = findViewById(R.id.moneyTxt);
+        moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
         isMute = prefs.getBoolean("isMute", false);
         isMuteMusic = prefs.getBoolean("isMuteMusic", false);
 
@@ -29,9 +35,11 @@ public class OptionActivity extends AppCompatActivity {
         if (isMute)
         {
             soundButton.setImageResource(R.drawable.sound_off);
+            soundButton.setBackgroundResource(R.color.OffRed);
         }
         else {
             soundButton.setImageResource(R.drawable.sound_on);
+            soundButton.setBackgroundResource(R.color.OnGreen);
         }
         soundButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,9 +48,11 @@ public class OptionActivity extends AppCompatActivity {
                 if (isMute)
                 {
                     soundButton.setImageResource(R.drawable.sound_off);
+                    soundButton.setBackgroundResource(R.color.OffRed);
                 }
                 else {
                     soundButton.setImageResource(R.drawable.sound_on);
+                    soundButton.setBackgroundResource(R.color.OnGreen);
                 }
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("isMute", isMute);
@@ -55,9 +65,11 @@ public class OptionActivity extends AppCompatActivity {
         if (isMuteMusic)
         {
             musicButton.setImageResource(R.drawable.music_off);
+            musicButton.setBackgroundResource(R.color.OffRed);
         }
         else {
             musicButton.setImageResource(R.drawable.music_on);
+            musicButton.setBackgroundResource(R.color.OnGreen);
         }
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +78,11 @@ public class OptionActivity extends AppCompatActivity {
                 if (isMuteMusic)
                 {
                     musicButton.setImageResource(R.drawable.music_off);
+                    musicButton.setBackgroundResource(R.color.OffRed);
                 }
                 else {
                     musicButton.setImageResource(R.drawable.music_on);
+                    musicButton.setBackgroundResource(R.color.OnGreen);
                 }
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("isMuteMusic", isMuteMusic);
@@ -81,6 +95,14 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OptionActivity.this, MainActivity.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        findViewById(R.id.shopb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionActivity.this, ShopActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

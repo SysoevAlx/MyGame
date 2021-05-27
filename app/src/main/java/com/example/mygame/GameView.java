@@ -1,10 +1,13 @@
 package com.example.mygame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -12,16 +15,19 @@ import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
 
+    private final GameplayActivity activity;
     private int soundhit, soundexplosion, soundbutton, music;
     private Thread thread;
     private boolean isPlaying, isGameOver;
-    private int screenX, screenY, cooldown, killcount, difficulty;
+    private int screenX, screenY, cooldown, killcount, difficulty, score = 0, money = 0;
     private int[] formercoordinate = new int[2];
     public static float screenRatioX, screenRatioY;
     private Random random;
@@ -40,6 +46,7 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(GameplayActivity activity, int screenX, int screenY) {
         super(activity);
 
+        this.activity = activity;
         prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
 
         this.screenX = screenX;
@@ -88,6 +95,11 @@ public class GameView extends SurfaceView implements Runnable {
         background2.y = screenY;
 
         paint = new Paint();
+        paint.setTextSize(60);
+        paint.setColor(Color.WHITE);
+        Typeface furore = ResourcesCompat.getFont(getContext(), R.font.furore);
+        paint.setTypeface(furore);
+
         random = new Random();
 
     }
@@ -165,6 +177,8 @@ public class GameView extends SurfaceView implements Runnable {
                     cooldown=0;
                     killcount = 0;
                     difficulty++;
+                    score = score + 10;
+                    money = money + 100;
                     boss.health = 10;
                     if (!prefs.getBoolean("isMute", false)){
                     soundPool.play(soundexplosion,1,1,1, 3,1.5f);}
@@ -199,6 +213,8 @@ public class GameView extends SurfaceView implements Runnable {
                     enemy.y = -200;
                     bullet.y -=screenY;
                     killcount++;
+                    score++;
+                    money = money + 20;
                     if (!prefs.getBoolean("isMute", false)){
                     soundPool.play(soundexplosion,1,1,1, 0,1);}
                 }
@@ -256,11 +272,42 @@ public class GameView extends SurfaceView implements Runnable {
             for (Enemy enemy : enemies) {
                 canvas.drawBitmap(enemy.enemy, enemy.x, enemy.y, paint);
             }
+
+            canvas.drawText("Score: " + score + "", 50, 100, paint);
+            canvas.drawText("Money: " + money + "", 50, 200, paint);
+
             if(isGameOver) {
                 isPlaying = false;
+                SaveHighScore();
+                SaveMoney();
+                waitBeforeOff();
                 return; // конец геймовер
             }
             getHolder().unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private void SaveHighScore(){
+        if (prefs.getInt("highscore", 0) < score) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("highscore",score);
+        editor.apply(); }
+    }
+
+    private void SaveMoney(){
+        money = prefs.getInt("Allmoney", 0) + money;
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Allmoney", money);
+        editor.apply();
+    }
+
+    private void waitBeforeOff(){
+        try {
+            Thread.sleep(3000);
+            activity.startActivity(new Intent(activity, MainActivity.class));
+            activity.finish();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
