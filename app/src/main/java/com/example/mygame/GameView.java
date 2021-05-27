@@ -1,6 +1,7 @@
 package com.example.mygame;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -29,12 +30,17 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private Boss boss;
     private Enemy[] enemies;
+    private SharedPreferences prefs;
     private List<Bullet> bullets;
     private List<Bullet> ebullets;
     private SoundPool soundPool;
 
+
+
     public GameView(GameplayActivity activity, int screenX, int screenY) {
         super(activity);
+
+        prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -160,7 +166,8 @@ public class GameView extends SurfaceView implements Runnable {
                     killcount = 0;
                     difficulty++;
                     boss.health = 10;
-                    soundPool.play(soundexplosion,1,1,1, 3,1.5f);
+                    if (!prefs.getBoolean("isMute", false)){
+                    soundPool.play(soundexplosion,1,1,1, 3,1.5f);}
                 }
                 boss.health -=1;
             }
@@ -192,12 +199,14 @@ public class GameView extends SurfaceView implements Runnable {
                     enemy.y = -200;
                     bullet.y -=screenY;
                     killcount++;
-                    soundPool.play(soundexplosion,1,1,1, 0,1);
+                    if (!prefs.getBoolean("isMute", false)){
+                    soundPool.play(soundexplosion,1,1,1, 0,1);}
                 }
             }
 
             if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
-                soundPool.play(soundexplosion,1,1,1, 0,1);
+                if (!prefs.getBoolean("isMute", false)){
+                soundPool.play(soundexplosion,1,1,1, 0,1);}
                 isGameOver = true;
                 return;
             }
@@ -210,7 +219,8 @@ public class GameView extends SurfaceView implements Runnable {
                 trashBullet.add(bullet);
             }
             if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
-                soundPool.play(soundexplosion,1,1,1, 0,1);
+                if (!prefs.getBoolean("isMute", false)){
+                soundPool.play(soundexplosion,1,1,1, 0,1); }
                 isGameOver = true;
                 return;
             }
@@ -304,7 +314,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void ShootBullet() {
-        soundPool.play(soundhit, 0.5f,0.5f,0,0,1);
+        if (!prefs.getBoolean("isMute", false)){
+        soundPool.play(soundhit, 0.5f,0.5f,0,0,1);}
         Bullet bullet = new Bullet(getResources(), 1);
         bullet.x = player.x + player.widht / 2;
         bullet.y = player.y-bullet.height/2;

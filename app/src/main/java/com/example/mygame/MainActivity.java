@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,9 +19,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, GameplayActivity.class));
                 overridePendingTransition(0, 0);
-                hideNavBar();
             }
         });
+        findViewById(R.id.settingsb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, OptionActivity.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
     }
 
     // Скрыть системную навигацию при разворачивании приложения
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         hideNavBar();
     }
+
+
 
     // Скрыть системную навигацию
     private void hideNavBar() {
