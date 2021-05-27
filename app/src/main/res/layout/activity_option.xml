@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1424"
+    tools:context=".OptionActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/furore"
+        android:gravity="center"
+        android:text="OPTIONS"
+        android:textColor="#F0F1FE"
+        android:layout_marginTop="60dp"
+        android:textSize="70dp" />
+
+    <ImageView
+        android:id="@+id/settingsb"
+        android:layout_width="69dp"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/settings" />
+
+    <ImageView
+        android:id="@+id/homeb"
+        android:layout_width="69dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/home" />
+
+    <ImageView
+        android:id="@+id/musicb"
+        android:layout_width="69dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/music_on" />
+
+    <ImageView
+        android:id="@+id/soundb"
+        android:layout_width="69dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:src="@drawable/sound_on" />
+
+</RelativeLayout>
