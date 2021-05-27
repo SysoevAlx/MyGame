@@ -24,10 +24,10 @@ import java.util.Random;
 public class GameView extends SurfaceView implements Runnable {
 
     private final GameplayActivity activity;
-    private int soundhit, soundexplosion, soundbutton, music;
+    private int soundhit, soundexplosion, soundbutton;
     private Thread thread;
     private boolean isPlaying, isGameOver;
-    private int screenX, screenY, cooldown, killcount, difficulty, score = 0, money = 0;
+    private int screenX, screenY, cooldown, killcount, difficulty, score = 0, money = 0, skin, backspeed;
     private int[] formercoordinate = new int[2];
     public static float screenRatioX, screenRatioY;
     private Random random;
@@ -59,8 +59,9 @@ public class GameView extends SurfaceView implements Runnable {
 
         background1 = new GameBackground(screenX, screenY, getResources());
         background2 = new GameBackground(screenX, screenY, getResources());
+        skin = prefs.getInt("skin", R.drawable.player);
 
-        player = new Player(screenX, screenY, getResources());
+        player = new Player(screenX, screenY, getResources(), skin);
         boss = new Boss(screenX, screenY, getResources());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // работаем с музыкой
@@ -106,7 +107,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
-        soundPool.play(music,1,1,4,-1,1);
         while (isPlaying) {
             update();
             draw();
@@ -115,139 +115,148 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void update() {
-        background1.y -= 10 * screenRatioY;
-        background2.y -= 10 * screenRatioY;
+        if (isGameOver){
 
-        if (background1.y + background1.background.getHeight() < 0) {
-            background1.y = screenY;
         }
-        if (background2.y + background2.background.getHeight() < 0) {
-            background2.y = screenY;
-        }
+        else {
+            backspeed = (int) (14*screenRatioY);
 
-        if (player.directionx != 0) {
-            player.x += player.directionx * screenRatioX * 10;
-        }
-        if (player.directiony != 0) {
-            player.y += player.directiony * screenRatioX * 10;
-        }
+            background1.y -= backspeed;
+            background2.y -= backspeed;
 
-        if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
-            player.directionx = 0;
-
-        if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
-            player.directiony = 0;
-
-
-        if (player.x <= 0) player.x = 0;
-        if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
-
-
-        if (cooldown % 20 == 1) {
-            ShootBullet();
-        }
-
-        if (killcount >= 5 && boss.y<300)
-        {
-            boss.y += 25;
-        }
-
-        if (boss.y>300){
-            for(int i = 0; i<difficulty; i++){
-            if (random.nextInt(50)<15 && cooldown%20 == 1){ // стрельба босса
-                Bullet enb = new Bullet(getResources(),2);
-                enb.x = random.nextInt(boss.widht)+boss.x;
-                enb.y = boss.y+boss.height;
-                ebullets.add(enb);
+            if (background1.y + background1.background.getHeight() < 0) {
+                background1.y = screenY;
             }
+            if (background2.y + background2.background.getHeight() < 0) {
+                background2.y = screenY;
             }
-        }
 
-        List<Bullet> trashBullet = new ArrayList<>();
-
-        for (Bullet bullet : bullets) {
-            if (bullet.y < 0) {
-                trashBullet.add(bullet);
+            if (player.directionx != 0) {
+                player.x += player.directionx * screenRatioX * 10;
             }
-            if (Rect.intersects(bullet.HitBox(), boss.HitBox()))
-            {
-                bullet.y = -screenY;
-                if (boss.health==0) { // логика босса
-                    boss.y -= screenY;
-                    cooldown=0;
-                    killcount = 0;
-                    difficulty++;
-                    score = score + 10;
-                    money = money + 100;
-                    boss.health = 10;
-                    if (!prefs.getBoolean("isMute", false)){
-                    soundPool.play(soundexplosion,1,1,1, 3,1.5f);}
+            if (player.directiony != 0) {
+                player.y += player.directiony * screenRatioX * 10;
+            }
+
+            if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
+                player.directionx = 0;
+
+            if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
+                player.directiony = 0;
+
+
+            if (player.x <= 0) player.x = 0;
+            if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
+
+
+            if (cooldown % 20 == 1) {
+                ShootBullet();
+            }
+
+            if (killcount >= 5 && boss.y < 300) {
+                boss.y += 25;
+            }
+
+            if (boss.y > 300) {
+                for (int i = 0; i < difficulty; i++) {
+                    if (random.nextInt(50) < 15 && cooldown % 20 == 1) { // стрельба босса
+                        Bullet enb = new Bullet(getResources(), 2);
+                        enb.x = random.nextInt(boss.widht) + boss.x;
+                        enb.y = boss.y + boss.height;
+                        ebullets.add(enb);
+                    }
                 }
-                boss.health -=1;
-            }
-            bullet.y -= 40 * screenRatioY;
-        }
-
-        for (Enemy enemy : enemies) { // логика противников
-            if (enemy.y > screenY) {
-                enemy.y = -100;
             }
 
-            if (enemy.y + enemy.height < 0) {
-                enemy.speed = random.nextInt((int) (20 * screenRatioY)) + 5;
-                enemy.x = random.nextInt(screenX - enemy.widht);
-            }
-
-            enemy.y += enemy.speed;
-
-            if (random.nextInt(50)<10 && cooldown%20 == 1){ // стрельба врагов
-                Bullet enb = new Bullet(getResources(),2);
-                enb.x = enemy.x+enemy.widht/2;
-                enb.y = enemy.y+enemy.height;
-                ebullets.add(enb);
-            }
-
+            List<Bullet> trashBullet = new ArrayList<>();
 
             for (Bullet bullet : bullets) {
-                if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
-                    enemy.y = -200;
-                    bullet.y -=screenY;
-                    killcount++;
-                    score++;
-                    money = money + 20;
-                    if (!prefs.getBoolean("isMute", false)){
-                    soundPool.play(soundexplosion,1,1,1, 0,1);}
+                if (bullet.y < 0) {
+                    trashBullet.add(bullet);
+                }
+                if (Rect.intersects(bullet.HitBox(), boss.HitBox())) {
+                    bullet.y = -screenY;
+                    if (boss.health == 0) { // логика босса
+                        boss.y -= screenY;
+                        cooldown = 0;
+                        killcount = 0;
+                        difficulty++;
+                        score = score + 10;
+                        money = money + 100;
+                        boss.health = 10;
+                        if (!prefs.getBoolean("isMute", false)) {
+                            soundPool.play(soundexplosion, 1, 1, 1, 3, 1.5f);
+                        }
+                    }
+                    boss.health -= 1;
+                }
+                bullet.y -= 40 * screenRatioY;
+            }
+
+            for (Enemy enemy : enemies) { // логика противников
+                if (enemy.y > screenY) {
+                    enemy.y = -100;
+                }
+
+                if (enemy.y + enemy.height < 0) {
+                    enemy.speed = random.nextInt((int) (20 * screenRatioY)) + 5;
+                    enemy.x = random.nextInt(screenX - enemy.widht);
+                }
+
+                enemy.y += enemy.speed;
+
+                if (random.nextInt(50) < 10 && cooldown % 20 == 1) { // стрельба врагов
+                    Bullet enb = new Bullet(getResources(), 2);
+                    enb.x = enemy.x + enemy.widht / 2;
+                    enb.y = enemy.y + enemy.height;
+                    ebullets.add(enb);
+                }
+
+
+                for (Bullet bullet : bullets) {
+                    if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
+                        enemy.y = -200;
+                        bullet.y -= screenY;
+                        killcount++;
+                        score++;
+                        money = money + 20;
+                        if (!prefs.getBoolean("isMute", false)) {
+                            soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                        }
+                    }
+                }
+
+                if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
+                    if (!prefs.getBoolean("isMute", false)) {
+                        soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                    }
+                    isGameOver = true;
+                    return;
                 }
             }
 
-            if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
-                if (!prefs.getBoolean("isMute", false)){
-                soundPool.play(soundexplosion,1,1,1, 0,1);}
-                isGameOver = true;
-                return;
+            for (Bullet bullet : ebullets) { // логика вражкеских пуль
+
+                bullet.y += 40 * screenRatioY;
+                if (bullet.y > screenY) {
+                    trashBullet.add(bullet);
+                }
+                if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
+                    if (!prefs.getBoolean("isMute", false)) {
+                        soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                    }
+                    isGameOver = true;
+                    return;
+                }
             }
-        }
 
-        for (Bullet bullet: ebullets){ // логика вражкеских пуль
 
-            bullet.y += 40 * screenRatioY;
-            if (bullet.y > screenY) {
-                trashBullet.add(bullet);
+            for (Bullet bullet : trashBullet) {
+                bullets.remove(bullet);
+                ebullets.remove(bullet);
             }
-            if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
-                if (!prefs.getBoolean("isMute", false)){
-                soundPool.play(soundexplosion,1,1,1, 0,1); }
-                isGameOver = true;
-                return;
-            }
+            trashBullet.clear();
         }
-
-
-        for (Bullet bullet : trashBullet) {
-            bullets.remove(bullet);
-            ebullets.remove(bullet);
-        }
-        trashBullet.clear();
     }
 
     private void draw() {
@@ -303,7 +312,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void waitBeforeOff(){
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
             activity.startActivity(new Intent(activity, MainActivity.class));
             activity.finish();
         } catch (InterruptedException e) {
@@ -328,7 +337,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void pause() {
         try {
-            isPlaying = false;
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

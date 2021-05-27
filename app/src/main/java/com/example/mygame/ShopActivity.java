@@ -5,13 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.security.cert.PKIXRevocationChecker;
 
 public class ShopActivity extends AppCompatActivity {
+    private int selectedSkin, skinnow = 0;
+    private SharedPreferences prefs;
+    private ImageView skinImage;
+    private Button button, butbuy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +26,12 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
         hideNavBar();
 
-        SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
+        prefs = getSharedPreferences("game", MODE_PRIVATE);
+
 
         TextView moneyTxt = findViewById(R.id.moneyTxt);
         moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
+        skinImage = findViewById(R.id.skin);
 
 
         findViewById(R.id.homeb).setOnClickListener(new View.OnClickListener() {
@@ -40,6 +49,81 @@ public class ShopActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             }
         });
+        //Смотрим кнопки по айдишнику
+        ImageView leftArrow = findViewById(R.id.leftarrow);
+        ImageView rightArrow = findViewById(R.id.rightarrow);
+        button = findViewById(R.id.acceptButton);
+        butbuy = findViewById(R.id.BuyButton);
+
+        leftArrow.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (skinnow >=0) {
+                    skinnow-=1;
+                    ChangeSkinNow();
+                }
+            }
+        });
+
+        rightArrow.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (skinnow <=2) {
+                    skinnow+=1;
+                    ChangeSkinNow();
+                }
+            }
+        });
+
+        button.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = prefs.edit();
+                switch (skinnow) {
+                    case 0:
+                        editor.putInt("skin", R.drawable.player);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt("skin", R.drawable.player2);
+                        editor.apply();
+                        break;
+                    case 2:
+                        editor.putInt("skin", R.drawable.player3);
+                        editor.apply();
+                        break;
+                }
+            }
+        });
+
+        butbuy.setOnClickListener(new  View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = prefs.edit();
+                switch (skinnow) {
+                    case 1:
+                        if (prefs.getInt("Allmoney", 0) > 30) {
+                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 30);
+                            editor.putBoolean("bought1", true);
+                            editor.apply();
+                            butbuy.setVisibility(View.INVISIBLE);
+                            button.setEnabled(true);
+                        }
+                        break;
+                    case 2:
+                        if (prefs.getInt("Allmoney", 0) > 50) {
+                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 50);
+                            editor.putBoolean("bought2", true);
+                            editor.apply();
+                            butbuy.setVisibility(View.INVISIBLE);
+                            button.setEnabled(true);
+                        }
+                        break;
+                }
+                moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
+            }
+        });
+
     }
 
     // Скрыть системную навигацию при разворачивании приложения
@@ -47,6 +131,45 @@ public class ShopActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         hideNavBar();
+    }
+
+    private void ChangeSkinNow() {
+        switch (skinnow) {
+            case 0:
+                skinImage.setImageResource(R.drawable.player);
+                button.setEnabled(true);
+                butbuy.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                skinImage.setImageResource(R.drawable.player2);
+                if (prefs.getBoolean("bought1", false) == false){
+                    button.setEnabled(false);
+                    butbuy.setText("Купить - 30");
+                    butbuy.setVisibility(View.VISIBLE);
+                }
+                else {button.setEnabled(true);
+                butbuy.setVisibility(View.INVISIBLE);}
+                break;
+            case 2:
+                skinImage.setImageResource(R.drawable.player3);
+                if (prefs.getBoolean("bought2", false) == false){
+                    button.setEnabled(false);
+                    butbuy.setText("Купить - 50");
+                    butbuy.setVisibility(View.VISIBLE);
+                }
+                else {button.setEnabled(true);
+                butbuy.setVisibility(View.INVISIBLE);}
+                break;
+        }
+
+
+    }
+    private void ChooseSkin(int skinId){
+
+//        if (prefs.getInt("skin", skinId) < score) {
+//            SharedPreferences.Editor editor = prefs.edit();
+//            editor.putInt("skin",score);
+//            editor.apply(); }
     }
 
     // Скрыть системную навигацию

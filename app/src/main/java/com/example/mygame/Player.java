@@ -12,8 +12,8 @@ public class Player {
     int x, y, widht, height, directionx, directiony;
     Bitmap player;
 
-    Player(int screenX, int screenY, Resources res) { // добавил параметр по y для лучшего позицонирования
-        player = BitmapFactory.decodeResource(res, R.drawable.player);
+    Player(int screenX, int screenY, Resources res, int skin) { // добавил параметр по y для лучшего позицонирования
+        player = BitmapFactory.decodeResource(res, skin);
         widht = player.getWidth();
         height = player.getHeight();
 

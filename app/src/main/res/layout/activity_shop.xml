@@ -12,10 +12,55 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/furore"
         android:gravity="center"
-        android:text="SHOP"
+        android:text="@string/shop"
         android:textColor="#F0F1FE"
         android:layout_marginTop="60dp"
         android:textSize="70dp" />
+
+    <ImageView
+        android:id="@+id/skin"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/player" />
+
+    <ImageView
+        android:id="@+id/rightarrow"
+        android:layout_alignLeft="@+id/skin"
+        android:layout_marginLeft="190dp"
+        android:layout_centerVertical="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_baseline_arrow_right_24" />
+
+    <ImageView
+        android:id="@+id/leftarrow"
+        android:layout_alignRight="@+id/skin"
+        android:layout_marginRight="190dp"
+        android:layout_centerVertical="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_baseline_arrow_left_24" />
+
+    <Button
+        android:id="@+id/BuyButton"
+        android:layout_width="150dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="Купить"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="120dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:text="Принять"
+        android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/moneyTxt"
