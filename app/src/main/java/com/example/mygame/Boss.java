@@ -13,7 +13,7 @@ public class Boss {
     Bitmap boss;
 
     Boss(int screenX, int screenY, Resources res) { // добавил параметр по y для лучшего позицонирования
-        boss = BitmapFactory.decodeResource(res, R.drawable.enemy);
+        boss = BitmapFactory.decodeResource(res, R.drawable.boss);
 
         widht = boss.getWidth();
         height = boss.getHeight();
