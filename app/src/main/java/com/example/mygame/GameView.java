@@ -149,8 +149,9 @@ public class GameView extends SurfaceView implements Runnable {
             ShootBullet();
         }
 
-        if (killcount >= 5 && boss.y < 300) {
+        if (killcount >= 25 && boss.y < 300) {
             boss.y += 25;
+            boss.health = 10;
         }
 
         if (boss.y > 300) {

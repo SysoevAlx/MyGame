@@ -110,8 +110,8 @@ public class ShopActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = prefs.edit();
                 switch (skinnow) {
                     case 1:
-                        if (prefs.getInt("Allmoney", 0) > 30) {
-                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 30);
+                        if (prefs.getInt("Allmoney", 0) > 10000) {
+                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 10000);
                             editor.putBoolean("bought1", true);
                             editor.apply();
                             butbuy.setVisibility(View.INVISIBLE);
@@ -119,8 +119,8 @@ public class ShopActivity extends AppCompatActivity {
                         }
                         break;
                     case 2:
-                        if (prefs.getInt("Allmoney", 0) > 50) {
-                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 50);
+                        if (prefs.getInt("Allmoney", 0) > 20000) {
+                            editor.putInt("Allmoney", prefs.getInt("Allmoney", 0) - 20000);
                             editor.putBoolean("bought2", true);
                             editor.apply();
                             butbuy.setVisibility(View.INVISIBLE);
@@ -152,7 +152,7 @@ public class ShopActivity extends AppCompatActivity {
                 skinImage.setImageResource(R.drawable.player2);
                 if (prefs.getBoolean("bought1", false) == false){
                     button.setEnabled(false);
-                    butbuy.setText("Buy" + "\n" + "$ 30");
+                    butbuy.setText("Buy" + "\n" + "$ 10000");
                     butbuy.setVisibility(View.VISIBLE);
                 }
                 else {button.setEnabled(true);
@@ -162,7 +162,7 @@ public class ShopActivity extends AppCompatActivity {
                 skinImage.setImageResource(R.drawable.player3);
                 if (prefs.getBoolean("bought2", false) == false){
                     button.setEnabled(false);
-                    butbuy.setText("Buy" + "\n" + "$ 50");
+                    butbuy.setText("Buy" + "\n" + "$ 20000");
                     butbuy.setVisibility(View.VISIBLE);
                 }
                 else {button.setEnabled(true);
