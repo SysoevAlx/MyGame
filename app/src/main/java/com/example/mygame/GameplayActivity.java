@@ -35,13 +35,23 @@ public class GameplayActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        mediaPlayer.pause();
         gameView.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mediaPlayer.start();
         gameView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.release();
+
     }
 
     // Скрыть системную навигацию
