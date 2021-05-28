@@ -1,4 +1,4 @@
-package com.example.mygame;
+package com.example.StarCrusher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 public class GameplayActivity extends AppCompatActivity {
 

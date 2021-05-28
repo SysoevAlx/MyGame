@@ -1,20 +1,17 @@
-package com.example.mygame;
+package com.example.StarCrusher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.security.cert.PKIXRevocationChecker;
-
 public class ShopActivity extends AppCompatActivity {
-    private int selectedSkin, skinnow = 0;
+    private int skinnow = 0;
     private SharedPreferences prefs;
     private ImageView skinImage;
     private Button button, butbuy;

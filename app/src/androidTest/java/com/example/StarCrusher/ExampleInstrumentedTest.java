@@ -1,4 +1,4 @@
-package com.example.mygame;
+package com.example.StarCrusher;
 
 import android.content.Context;
 

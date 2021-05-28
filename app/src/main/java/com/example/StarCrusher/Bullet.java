@@ -1,12 +1,12 @@
-package com.example.mygame;
+package com.example.StarCrusher;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
-import static com.example.mygame.GameView.screenRatioY;
-import static com.example.mygame.GameView.screenRatioX;
+import static com.example.StarCrusher.GameView.screenRatioY;
+import static com.example.StarCrusher.GameView.screenRatioX;
 
 
 public class Bullet {

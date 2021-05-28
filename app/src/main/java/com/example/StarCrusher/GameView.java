@@ -1,7 +1,6 @@
-package com.example.mygame;
+package com.example.StarCrusher;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
