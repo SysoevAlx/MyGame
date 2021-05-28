@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    TextView highScoreTxt, moneyTxt;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         hideNavBar();
 
-        SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
-
-        TextView highScoreTxt = findViewById(R.id.highScoreTxt);
-        highScoreTxt.setText ("HighScore: " + prefs.getInt("highscore", 0));
-
-        TextView moneyTxt = findViewById(R.id.moneyTxt);
-        moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
+        UpdateScore();
 
         findViewById(R.id.playb).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void UpdateScore() {
+        prefs = getSharedPreferences("game", MODE_PRIVATE);
+
+        highScoreTxt = findViewById(R.id.highScoreTxt);
+        highScoreTxt.setText ("HighScore: " + prefs.getInt("highscore", 0));
+
+        moneyTxt = findViewById(R.id.moneyTxt);
+        moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
+    }
+
     // Скрыть системную навигацию при разворачивании приложения
     @Override
     protected void onResume() {
         super.onResume();
+        UpdateScore();
         hideNavBar();
+
     }
 
 
