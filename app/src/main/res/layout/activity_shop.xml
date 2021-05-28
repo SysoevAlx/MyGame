@@ -50,6 +50,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
         android:text="Купить"
+        android:visibility="invisible"
         android:layout_height="50dp"/>
 
     <Button
