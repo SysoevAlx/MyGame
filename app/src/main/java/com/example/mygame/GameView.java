@@ -291,10 +291,56 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    // Рекорды
     private void SaveHighScore() {
         if (prefs.getInt("highscore", 0) < score) {
             SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore5", prefs.getInt("highscore4", 0));
+            editor.putString("highname5", prefs.getString("highname4", "....."));
+            editor.putInt("highscore4", prefs.getInt("highscore3", 0));
+            editor.putString("highname4", prefs.getString("highname3", "....."));
+            editor.putInt("highscore3", prefs.getInt("highscore2", 0));
+            editor.putString("highname3", prefs.getString("highname2", "....."));
+            editor.putInt("highscore2", prefs.getInt("highscore", 0));
+            editor.putString("highname2", prefs.getString("highname", "....."));
             editor.putInt("highscore", score);
+            editor.putString("highname", prefs.getString("pn", "player"));
+            editor.apply();
+        }
+        else if (prefs.getInt("highscore2", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore5", prefs.getInt("highscore4", 0));
+            editor.putString("highname5", prefs.getString("highname4", "....."));
+            editor.putInt("highscore4", prefs.getInt("highscore3", 0));
+            editor.putString("highname4", prefs.getString("highname3", "....."));
+            editor.putInt("highscore3", prefs.getInt("highscore2", 0));
+            editor.putString("highname3", prefs.getString("highname2", "....."));
+            editor.putInt("highscore2", score);
+            editor.putString("highname2", prefs.getString("pn", "player"));
+            editor.apply();
+        }
+        else if (prefs.getInt("highscore3", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore5", prefs.getInt("highscore4", 0));
+            editor.putString("highname5", prefs.getString("highname4", "....."));
+            editor.putInt("highscore4", prefs.getInt("highscore3", 0));
+            editor.putString("highname4", prefs.getString("highname3", "....."));
+            editor.putInt("highscore3", score);
+            editor.putString("highname3", prefs.getString("pn", "player"));
+            editor.apply();
+        }
+        else if (prefs.getInt("highscore4", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore5", prefs.getInt("highscore4", 0));
+            editor.putString("highname5", prefs.getString("highname4", "....."));
+            editor.putInt("highscore4",score);
+            editor.putString("highname4", prefs.getString("pn", "player"));
+            editor.apply();
+        }
+        else if (prefs.getInt("highscore5", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore5", score);
+            editor.putString("highname5", prefs.getString("pn", "player"));
             editor.apply();
         }
     }

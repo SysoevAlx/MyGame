@@ -44,14 +44,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.scoreb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
     }
 
     private void UpdateScore() {
         prefs = getSharedPreferences("game", MODE_PRIVATE);
-
-        highScoreTxt = findViewById(R.id.highScoreTxt);
-        highScoreTxt.setText ("HighScore: " + prefs.getInt("highscore", 0));
-
         moneyTxt = findViewById(R.id.moneyTxt);
         moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
     }

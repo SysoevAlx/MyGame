@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +18,10 @@ public class OptionActivity extends AppCompatActivity {
 
     private boolean isMute;  // Звуки
     private boolean isMuteMusic; // Музыка
+
+    Button nicksave;
+    EditText editText;
+    String pn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +31,27 @@ public class OptionActivity extends AppCompatActivity {
 
 
         SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
-        TextView moneyTxt = findViewById(R.id.moneyTxt);
-        moneyTxt.setText ("$ " + prefs.getInt("Allmoney", 0));
+
         isMute = prefs.getBoolean("isMute", false);
         isMuteMusic = prefs.getBoolean("isMuteMusic", false);
+
+
+        nicksave = (Button) findViewById(R.id.nicknamesave);
+        editText=(EditText) findViewById(R.id.nickname);
+        String df = prefs.getString("pn", "player");
+        editText.setText(df);
+
+
+        nicksave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                pn = editText.getText().toString();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("pn", pn);
+                editor.apply();
+            }
+        });
 
 
         // Кнопка звука
@@ -95,6 +119,14 @@ public class OptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OptionActivity.this, MainActivity.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        findViewById(R.id.scoreb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionActivity.this, ScoreActivity.class));
                 overridePendingTransition(0, 0);
             }
         });

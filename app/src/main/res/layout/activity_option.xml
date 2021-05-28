@@ -18,58 +18,116 @@
         android:textSize="70dp" />
 
     <ImageView
-        android:id="@+id/settingsb"
-        android:layout_width="69dp"
-        android:layout_height="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/settings" />
-
-    <ImageView
-        android:id="@+id/homeb"
-        android:layout_width="69dp"
-        android:layout_height="53dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/home" />
-
-    <ImageView
         android:id="@+id/musicb"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/soundtext"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="280dp"
+        android:layout_marginBottom="20dp"
         android:background="#629955"
         android:src="@drawable/music_on" />
 
+    <TextView
+        android:id="@+id/musictext"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/musicb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/furore"
+        android:text="music"
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/soundtext"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/soundb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-295dp"
+        android:fontFamily="@font/furore"
+        android:text="audio"
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/nicknametext"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/soundb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/furore"
+        android:text="nickname"
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
     <ImageView
         android:id="@+id/soundb"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="300dp"
         android:background="#629955"
         android:src="@drawable/sound_on" />
 
-    <TextView
-        android:id="@+id/moneyTxt"
-        android:layout_width="394dp"
+    <ImageView
+        android:id="@+id/scoreb"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:fontFamily="@font/furore"
-        android:text="$"
-        android:textColor="#F0F1FE"
-        android:layout_marginLeft="30dp"
-        android:textSize="20dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toStartOf="@+id/homeb"
+        android:src="@drawable/score" />
 
     <ImageView
         android:id="@+id/shopb"
-        android:layout_width="69dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="270dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="60dp"
+        android:layout_toEndOf="@+id/homeb"
         android:src="@drawable/shop" />
+
+    <ImageView
+        android:id="@+id/homeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/home" />
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/nicknametext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="#53587E"
+        android:fontFamily="@font/furore"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:maxLength="6"
+        android:textColor="#F0F1FE" />
+
+    <Button
+        android:id="@+id/nicknamesave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nickname"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/furore"
+        android:text="save nickname"
+        app:backgroundTint="#343B70" />
 
 </RelativeLayout>

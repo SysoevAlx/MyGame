@@ -42,6 +42,14 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.scoreb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ShopActivity.this, ScoreActivity.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
         findViewById(R.id.settingsb).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,7 +152,7 @@ public class ShopActivity extends AppCompatActivity {
                 skinImage.setImageResource(R.drawable.player2);
                 if (prefs.getBoolean("bought1", false) == false){
                     button.setEnabled(false);
-                    butbuy.setText("Купить - 30");
+                    butbuy.setText("Buy" + "\n" + "$ 30");
                     butbuy.setVisibility(View.VISIBLE);
                 }
                 else {button.setEnabled(true);
@@ -154,7 +162,7 @@ public class ShopActivity extends AppCompatActivity {
                 skinImage.setImageResource(R.drawable.player3);
                 if (prefs.getBoolean("bought2", false) == false){
                     button.setEnabled(false);
-                    butbuy.setText("Купить - 50");
+                    butbuy.setText("Buy" + "\n" + "$ 50");
                     butbuy.setVisibility(View.VISIBLE);
                 }
                 else {button.setEnabled(true);

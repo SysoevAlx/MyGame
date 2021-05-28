@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1424"
+    tools:context=".ScoreActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/furore"
+        android:gravity="center"
+        android:text="SCORE"
+        android:textColor="#F0F1FE"
+        android:layout_marginTop="60dp"
+        android:textSize="70dp" />
+
+    <ImageView
+        android:id="@+id/settingsb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:src="@drawable/settings" />
+
+    <ImageView
+        android:id="@+id/scoreb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toStartOf="@+id/homeb"
+        android:src="@drawable/score_paint" />
+
+    <ImageView
+        android:id="@+id/shopb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="60dp"
+        android:layout_toEndOf="@+id/homeb"
+        android:src="@drawable/shop" />
+
+    <ImageView
+        android:id="@+id/homeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/home" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/two"
+        android:layout_marginLeft="35dp"
+        android:fontFamily="@font/furore"
+        android:text="1."
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/fname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sname"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/furore"
+        android:text="....."
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/fscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sscore"
+        android:layout_marginLeft="220dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/furore"
+        android:text="00000"
+        android:textAlignment="textEnd"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/sname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tname"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="-240dp"
+        android:fontFamily="@font/furore"
+        android:text="....."
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/sscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tscore"
+        android:layout_marginLeft="220dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="-240dp"
+        android:fontFamily="@font/furore"
+        android:text="00000"
+        android:textAlignment="textEnd"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="250dp"
+        android:fontFamily="@font/furore"
+        android:text="....."
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/furore"
+        android:text="00000"
+        android:textAlignment="textEnd"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/frname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tname"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/furore"
+        android:text="....."
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/frscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tscore"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/furore"
+        android:text="00000"
+        android:textAlignment="textEnd"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/fvname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frname"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/furore"
+        android:text="....."
+        android:textAlignment="center"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/fvscore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frscore"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/furore"
+        android:text="00000"
+        android:textAlignment="textEnd"
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/three"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="-240dp"
+        android:fontFamily="@font/furore"
+        android:text="2."
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:fontFamily="@font/furore"
+        android:layout_centerVertical="true"
+        android:text="3."
+        android:textColor="#F0F1FE"
+        android:layout_marginLeft="30dp"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/four"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/three"
+        android:layout_marginVertical="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/furore"
+        android:text="4."
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/four"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/furore"
+        android:text="5."
+        android:textColor="#F0F1FE"
+        android:textSize="30dp" />
+
+
+</RelativeLayout>

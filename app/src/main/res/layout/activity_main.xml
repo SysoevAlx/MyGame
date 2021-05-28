@@ -13,20 +13,10 @@
         android:src="@drawable/background" />
 
     <TextView
-        android:id="@+id/highScoreTxt"
-        android:layout_width="373dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/furore"
-        android:gravity="end"
-        android:text="High score"
-        android:textColor="#F0F1FE"
-        android:textSize="20dp" />
-
-    <TextView
         android:id="@+id/moneyTxt"
-        android:layout_width="394dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/furore"
         android:text="$"
         android:textColor="#F0F1FE"
@@ -40,7 +30,7 @@
         android:gravity="center"
         android:text="STAR CRUSHER"
         android:textColor="#F0F1FE"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:textSize="70dp" />
 
     <ImageView
@@ -54,27 +44,42 @@
 
     <ImageView
         android:id="@+id/settingsb"
-        android:layout_width="69dp"
-        android:layout_height="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
         android:src="@drawable/settings" />
 
     <ImageView
-        android:id="@+id/shopb"
-        android:layout_width="69dp"
-        android:layout_height="53dp"
+        android:id="@+id/scoreb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="270dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toStartOf="@+id/homeb"
+        android:src="@drawable/score" />
+
+    <ImageView
+        android:id="@+id/shopb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="60dp"
+        android:layout_toEndOf="@+id/homeb"
         android:src="@drawable/shop" />
 
     <ImageView
-        android:layout_width="69dp"
-        android:layout_height="53dp"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/homeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/home" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/home_paint" />
 
 </RelativeLayout>
