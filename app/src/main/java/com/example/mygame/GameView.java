@@ -42,7 +42,6 @@ public class GameView extends SurfaceView implements Runnable {
     private SoundPool soundPool;
 
 
-
     public GameView(GameplayActivity activity, int screenX, int screenY) {
         super(activity);
 
@@ -115,148 +114,143 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void update() {
-        if (isGameOver){
 
+        backspeed = (int) (14 * screenRatioY);
+
+        background1.y -= backspeed;
+        background2.y -= backspeed;
+
+        if (background1.y + background1.background.getHeight() < 0) {
+            background1.y = screenY;
         }
-        else {
-            backspeed = (int) (14*screenRatioY);
+        if (background2.y + background2.background.getHeight() < 0) {
+            background2.y = screenY;
+        }
 
-            background1.y -= backspeed;
-            background2.y -= backspeed;
+        if (player.directionx != 0) {
+            player.x += player.directionx * screenRatioX * 10;
+        }
+        if (player.directiony != 0) {
+            player.y += player.directiony * screenRatioX * 10;
+        }
 
-            if (background1.y + background1.background.getHeight() < 0) {
-                background1.y = screenY;
-            }
-            if (background2.y + background2.background.getHeight() < 0) {
-                background2.y = screenY;
-            }
+        if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
+            player.directionx = 0;
 
-            if (player.directionx != 0) {
-                player.x += player.directionx * screenRatioX * 10;
-            }
-            if (player.directiony != 0) {
-                player.y += player.directiony * screenRatioX * 10;
-            }
-
-            if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
-                player.directionx = 0;
-
-            if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
-                player.directiony = 0;
+        if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
+            player.directiony = 0;
 
 
-            if (player.x <= 0) player.x = 0;
-            if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
+        if (player.x <= 0) player.x = 0;
+        if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
 
 
-            if (cooldown % 20 == 1) {
-                ShootBullet();
-            }
+        if (cooldown % 20 == 1) {
+            ShootBullet();
+        }
 
-            if (killcount >= 5 && boss.y < 300) {
-                boss.y += 25;
-            }
+        if (killcount >= 5 && boss.y < 300) {
+            boss.y += 25;
+        }
 
-            if (boss.y > 300) {
-                for (int i = 0; i < difficulty; i++) {
-                    if (random.nextInt(50) < 15 && cooldown % 20 == 1) { // стрельба босса
-                        Bullet enb = new Bullet(getResources(), 2);
-                        enb.x = random.nextInt(boss.widht) + boss.x;
-                        enb.y = boss.y + boss.height;
-                        ebullets.add(enb);
-                    }
-                }
-            }
-
-            List<Bullet> trashBullet = new ArrayList<>();
-
-            for (Bullet bullet : bullets) {
-                if (bullet.y < 0) {
-                    trashBullet.add(bullet);
-                }
-                if (Rect.intersects(bullet.HitBox(), boss.HitBox())) {
-                    bullet.y = -screenY;
-                    if (boss.health == 0) { // логика босса
-                        boss.y -= screenY;
-                        cooldown = 0;
-                        killcount = 0;
-                        difficulty++;
-                        score = score + 10;
-                        money = money + 100;
-                        boss.health = 10;
-                        if (!prefs.getBoolean("isMute", false)) {
-                            soundPool.play(soundexplosion, 1, 1, 1, 3, 1.5f);
-                        }
-                    }
-                    boss.health -= 1;
-                }
-                bullet.y -= 40 * screenRatioY;
-            }
-
-            for (Enemy enemy : enemies) { // логика противников
-                if (enemy.y > screenY) {
-                    enemy.y = -100;
-                }
-
-                if (enemy.y + enemy.height < 0) {
-                    enemy.speed = random.nextInt((int) (20 * screenRatioY)) + 5;
-                    enemy.x = random.nextInt(screenX - enemy.widht);
-                }
-
-                enemy.y += enemy.speed;
-
-                if (random.nextInt(50) < 10 && cooldown % 20 == 1) { // стрельба врагов
+        if (boss.y > 300) {
+            for (int i = 0; i < difficulty; i++) {
+                if (random.nextInt(50) < 15 && cooldown % 20 == 1) { // стрельба босса
                     Bullet enb = new Bullet(getResources(), 2);
-                    enb.x = enemy.x + enemy.widht / 2;
-                    enb.y = enemy.y + enemy.height;
+                    enb.x = random.nextInt(boss.widht) + boss.x;
+                    enb.y = boss.y + boss.height;
                     ebullets.add(enb);
                 }
-
-
-                for (Bullet bullet : bullets) {
-                    if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
-                        enemy.y = -200;
-                        bullet.y -= screenY;
-                        killcount++;
-                        score++;
-                        money = money + 20;
-                        if (!prefs.getBoolean("isMute", false)) {
-                            soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
-                        }
-                    }
-                }
-
-                if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
-                    if (!prefs.getBoolean("isMute", false)) {
-                        soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
-                    }
-                    isGameOver = true;
-                    return;
-                }
             }
-
-            for (Bullet bullet : ebullets) { // логика вражкеских пуль
-
-                bullet.y += 40 * screenRatioY;
-                if (bullet.y > screenY) {
-                    trashBullet.add(bullet);
-                }
-                if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
-                    if (!prefs.getBoolean("isMute", false)) {
-                        soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
-                    }
-                    isGameOver = true;
-                    return;
-                }
-            }
-
-
-            for (Bullet bullet : trashBullet) {
-                bullets.remove(bullet);
-                ebullets.remove(bullet);
-            }
-            trashBullet.clear();
         }
+
+        List<Bullet> trashBullet = new ArrayList<>();
+
+        for (Bullet bullet : bullets) {
+            if (bullet.y < 0) {
+                trashBullet.add(bullet);
+            }
+            if (Rect.intersects(bullet.HitBox(), boss.HitBox())) {
+                bullet.y = -screenY;
+                if (boss.health == 0) { // логика босса
+                    boss.y -= screenY;
+                    cooldown = 0;
+                    killcount = 0;
+                    difficulty++;
+                    score = score + 10;
+                    money = money + 100;
+                    boss.health = 10;
+                    if (!prefs.getBoolean("isMute", false)) {
+                        soundPool.play(soundexplosion, 1, 1, 1, 3, 1.5f);
+                    }
+                }
+                boss.health -= 1;
+            }
+            bullet.y -= 40 * screenRatioY;
+        }
+
+        for (Enemy enemy : enemies) { // логика противников
+            if (enemy.y > screenY) {
+                enemy.y = -100;
+            }
+
+            if (enemy.y + enemy.height < 0) {
+                enemy.speed = random.nextInt((int) (20 * screenRatioY)) + 5;
+                enemy.x = random.nextInt(screenX - enemy.widht);
+            }
+
+            enemy.y += enemy.speed;
+
+            if (random.nextInt(50) < 10 && cooldown % 20 == 1) { // стрельба врагов
+                Bullet enb = new Bullet(getResources(), 2);
+                enb.x = enemy.x + enemy.widht / 2;
+                enb.y = enemy.y + enemy.height;
+                ebullets.add(enb);
+            }
+
+
+            for (Bullet bullet : bullets) {
+                if (Rect.intersects(enemy.HitBox(), bullet.HitBox())) {
+                    enemy.y = -200;
+                    bullet.y -= screenY;
+                    killcount++;
+                    score++;
+                    money = money + 20;
+                    if (!prefs.getBoolean("isMute", false)) {
+                        soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                    }
+                }
+            }
+
+            if (Rect.intersects(enemy.HitBox(), player.HitBox())) {
+                if (!prefs.getBoolean("isMute", false)) {
+                    soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                }
+                isGameOver = true;
+                return;
+            }
+        }
+
+        for (Bullet bullet : ebullets) { // логика вражкеских пуль
+
+            bullet.y += 40 * screenRatioY;
+            if (bullet.y > screenY) {
+                trashBullet.add(bullet);
+            }
+            if (Rect.intersects(bullet.HitBox(), player.HitBox())) {
+                if (!prefs.getBoolean("isMute", false)) {
+                    soundPool.play(soundexplosion, 1, 1, 1, 0, 1);
+                }
+                isGameOver = true;
+                return;
+            }
+        }
+
+        for (Bullet bullet : trashBullet) {
+            bullets.remove(bullet);
+            ebullets.remove(bullet);
+        }
+        trashBullet.clear();
     }
 
     private void draw() {
@@ -285,8 +279,9 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawText("Score: " + score + "", 50, 100, paint);
             canvas.drawText("Money: " + money + "", 50, 200, paint);
 
-            if(isGameOver) {
+            if (isGameOver) {
                 isPlaying = false;
+                getHolder().unlockCanvasAndPost(canvas);
                 SaveHighScore();
                 SaveMoney();
                 waitBeforeOff();
@@ -296,24 +291,24 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    private void SaveHighScore(){
+    private void SaveHighScore() {
         if (prefs.getInt("highscore", 0) < score) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("highscore",score);
-        editor.apply(); }
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore", score);
+            editor.apply();
+        }
     }
 
-    private void SaveMoney(){
+    private void SaveMoney() {
         money = prefs.getInt("Allmoney", 0) + money;
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("Allmoney", money);
         editor.apply();
     }
 
-    private void waitBeforeOff(){
+    private void waitBeforeOff() {
         try {
             Thread.sleep(1000);
-            activity.startActivity(new Intent(activity, MainActivity.class));
             activity.finish();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -322,8 +317,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void sleep() {
         try {
+            if (isPlaying){
             cooldown++;
-            Thread.sleep(4);
+            Thread.sleep(4);}
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -352,13 +348,12 @@ public class GameView extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_MOVE:
                 if (event.getX() < player.x + player.widht / 2 - 10) {
                     player.directionx = -1;
-                }
-                else if (event.getX() > player.x + player.widht / 2 + 10) {
+                } else if (event.getX() > player.x + player.widht / 2 + 10) {
                     player.directionx = 1;
                 }
 
-                if (event.getY()<player.y+player.height/2 + 10) player.directiony= -1;
-                else if (event.getY()>player.y+player.height/2-10) player.directiony = 1;
+                if (event.getY() < player.y + player.height / 2 + 10) player.directiony = -1;
+                else if (event.getY() > player.y + player.height / 2 - 10) player.directiony = 1;
                 break;
             case MotionEvent.ACTION_UP:
                 player.directionx = 0;
@@ -369,11 +364,12 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     public void ShootBullet() {
-        if (!prefs.getBoolean("isMute", false)){
-        soundPool.play(soundhit, 0.5f,0.5f,0,0,1);}
+        if (!prefs.getBoolean("isMute", false)) {
+            soundPool.play(soundhit, 0.5f, 0.5f, 0, 0, 1);
+        }
         Bullet bullet = new Bullet(getResources(), 1);
         bullet.x = player.x + player.widht / 2;
-        bullet.y = player.y-bullet.height/2;
+        bullet.y = player.y - bullet.height / 2;
         bullets.add(bullet);
     }
 }
