@@ -169,13 +169,6 @@ public class ShopActivity extends AppCompatActivity {
 
 
     }
-    private void ChooseSkin(int skinId){
-
-//        if (prefs.getInt("skin", skinId) < score) {
-//            SharedPreferences.Editor editor = prefs.edit();
-//            editor.putInt("skin",score);
-//            editor.apply(); }
-    }
 
     // Скрыть системную навигацию
     private void hideNavBar() {
