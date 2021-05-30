@@ -18,11 +18,11 @@ public class GameplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
-        if (!prefs.getBoolean("isMuteMusic", false)){
         mediaPlayer = MediaPlayer.create(this, R.raw.backmusic);
         mediaPlayer.setLooping(true);
         mediaPlayer.setVolume(0.5f,0.4f);
-        mediaPlayer.start();}
+        if (!prefs.getBoolean("isMuteMusic", false)){
+        mediaPlayer.start(); }
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
         hideNavBar();
@@ -41,7 +41,9 @@ public class GameplayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer.start();
+        SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
+        if (!prefs.getBoolean("isMuteMusic", false)){
+        mediaPlayer.start();}
         gameView.resume();
     }
 
