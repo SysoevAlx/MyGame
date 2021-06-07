@@ -133,12 +133,14 @@ public class GameView extends SurfaceView implements Runnable {
             player.y += player.directiony * screenRatioX * 10;
         }
 
-        if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10)
+        if (player.x + player.widht / 2 <= formercoordinate[0] + 10 && player.x + player.widht / 2 >= formercoordinate[0] - 10) {
+            player.x = formercoordinate[0]-player.widht/2;
             player.directionx = 0;
-
-        if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25)
+        }
+        if (player.y + player.height / 2 <= formercoordinate[1] + 25 && player.y + player.height / 2 >= formercoordinate[1] - 25) {
+            player.y = formercoordinate[1]-player.height/2;
             player.directiony = 0;
-
+        }
 
         if (player.x <= 0) player.x = 0;
         if (player.x >= screenX - player.widht) player.x = screenX - player.widht;
