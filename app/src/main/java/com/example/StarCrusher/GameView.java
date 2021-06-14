@@ -11,6 +11,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -25,7 +26,7 @@ public class GameView extends SurfaceView implements Runnable {
     private final GameplayActivity activity;
     private int soundhit, soundexplosion, soundbutton;
     private Thread thread;
-    private boolean isPlaying, isGameOver;
+    public boolean isPlaying, isGameOver;
     private int screenX, screenY, cooldown, killcount, difficulty, score = 0, money = 0, skin, backspeed;
     private int[] formercoordinate = new int[2];
     public static float screenRatioX, screenRatioY;
@@ -366,7 +367,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void sleep() {
         try {
             cooldown++;
-            Thread.sleep(4);
+            Thread.sleep(12);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -380,11 +381,13 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void pause() {
         try {
+            isPlaying = false;
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -409,6 +412,8 @@ public class GameView extends SurfaceView implements Runnable {
         }
         return true;
     }
+
+
 
     public void ShootBullet() {
         if (!prefs.getBoolean("isMute", false)) {

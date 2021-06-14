@@ -32,6 +32,11 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        gameView.isGameOver = true;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mediaPlayer.pause();
